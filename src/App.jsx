@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
 export default function App() {
@@ -8,6 +9,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
 
   const handleChange = (e) => {
     setFormData({
@@ -231,15 +233,15 @@ export default function App() {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Enter your username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Enter your username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        required
+                      />
             </div>
 
             <div className="form-group">

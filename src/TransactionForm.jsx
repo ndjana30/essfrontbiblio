@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const TransactionForm = () => {
   const [availableAppareils, setAvailableAppareils] = useState([]);
@@ -6,7 +7,7 @@ const TransactionForm = () => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
-
+  const navigate = useNavigate();
   // Helper function to get authorization header
   const getAuthHeader = () => {
     const token = localStorage.getItem('jwt_token');
@@ -17,7 +18,10 @@ const TransactionForm = () => {
   // 1. Fetch available devices on component mount
   useEffect(() => {
     fetchAvailableAppareils();
-  }, []);
+  },
+
+
+[]);
 
   const fetchAvailableAppareils = async () => {
 
@@ -81,6 +85,7 @@ const TransactionForm = () => {
         text: successMessage,
         type: 'success',
       });
+      navigate('/user-transactions-list');
       setSelectedAppareils([]);
       fetchAvailableAppareils(); // Refresh list after transaction starts
     } catch (err) {

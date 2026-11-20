@@ -1,52 +1,49 @@
 import React, { useState, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const TRANSACTIONS_API_URL = 'http://localhost:8080/api/v1/transactions/all';
 
-export default function UserTransactions() 
+export default function UserTransactions()
 {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const [classe, setClasse] = useState([]);
+     const [phone, setPhone] = useState([]);
 
-  const handleToggleStatus = (transactionId) => {
-      const token = localStorage.getItem('jwt_token');
-
-      fetch(`http://localhost:8080/api/v1/transaction/end?id=${transactionId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
-        },
-      })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-          }
-          return res.text(); // or res.json() depending on what your service returns
-        })
-        .then(() => {
-          // Update the local state so the UI reflects the change immediately
-          setTransactions((prevTransactions) =>
-            prevTransactions.map((tx) =>
-              tx.id === transactionId
-                ? {
-                    ...tx,
-                    transactionStatus: 'RETURNED',
-                    depositTime: new Date().toISOString(),
+ const getUserInfo =()=>{
+     const token = localStorage.getItem('jwt_token');
+        fetch('http://localhost:8080/api/v1/user/infos', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+              },
+            })
+                .then((res) => {
+                  if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
                   }
-                : tx
-            )
-          );
-        })
-        .catch((err) => {
-          console.error('Failed to end transaction:', err);
-        });
-    };
+
+                  return res.json();
+                })
+                .then((data) => {
+                    console.log(data);
+                    setClasse(data.classe);
+                    setPhone(data.phoneNumber);
+                })
+                .catch((err) => {
+                  setError(err.message);
+
+                });
+    }
+
 
   useEffect(() => {
     const token = localStorage.getItem('jwt_token');
+    getUserInfo();
 
-    fetch(TRANSACTIONS_API_URL, {
+    fetch(`http://localhost:8080/api/v1/transaction/user`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -157,14 +154,7 @@ export default function UserTransactions()
                     <span style={getStatusBadgeStyle(tx.transactionStatus)}>
                       {tx.transactionStatus || 'UNKNOWN'}
                     </span>
-                    <button
-                                                onClick={() => handleToggleStatus(tx.id, tx.transactionStatus)}
-                                                style={styles.actionButton}
-                                                onMouseOver={(e) => (e.target.style.backgroundColor = '#4338ca')}
-                                                onMouseOut={(e) => (e.target.style.backgroundColor = '#4f46e5')}
-                                              >
-                                                Change Status
-                                              </button>
+
                   </div>
 
                   <div style={styles.dateGroup}>
@@ -186,7 +176,21 @@ export default function UserTransactions()
                       <strong style={{ color: '#c7d2fe' }}>Assigned User:</strong>{' '}
                       {tx.user.name || tx.user.username || tx.user.email || `ID: ${tx.user.id}`}
                     </span>
+                    <div style={styles.userBar}>
+                                        <span>
+                                          <strong style={{ color: '#c7d2fe' }}> User Class:</strong>{' '}
+                                          {classe}
+                                        </span>
+                                         <div style={styles.userBar}>
+                                                                                <span>
+                                                                                  <strong style={{ color: '#c7d2fe' }}> User Phone:</strong>{' '}
+                                                                                  {phone}
+                                                                                </span>
+                                                                              </div>
+                                      </div>
                   </div>
+
+
                 )}
 
                 {/* Appareils Grid */}

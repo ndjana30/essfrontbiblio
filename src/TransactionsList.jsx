@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-const TRANSACTIONS_API_URL = 'http://localhost:8080/api/v1/transactions/all';
 
 export default function TransactionsList() {
-  const [transactions, setTransactions] = useState([]);
+    const TRANSACTIONS_API_URL = 'http://localhost:8080/api/v1/transactions/all';
+
+   const [classe, setClasse] = useState([]);
+   const [phone, setPhone] = useState([]);
+    const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+const token = localStorage.getItem('jwt_token');
 
   const handleToggleStatus = (transactionId) => {
       const token = localStorage.getItem('jwt_token');
@@ -43,6 +48,7 @@ export default function TransactionsList() {
     };
 
   useEffect(() => {
+
     const token = localStorage.getItem('jwt_token');
 
     fetch(TRANSACTIONS_API_URL, {
@@ -66,6 +72,10 @@ export default function TransactionsList() {
         setError(err.message);
         setLoading(false);
       });
+
+
+
+
   }, []);
 
   const getStatusBadgeStyle = (status) => {
@@ -185,6 +195,19 @@ export default function TransactionsList() {
                       <strong style={{ color: '#c7d2fe' }}>Assigned User:</strong>{' '}
                       {tx.user.name || tx.user.username || tx.user.email || `ID: ${tx.user.id}`}
                     </span>
+                    <div style={styles.userBar}>
+                    <span>
+                      <strong style={{ color: '#c7d2fe' }}>User Class:</strong>{' '}
+                      {tx.userClass|| tx.user.classe  `ID: ${tx.user.id}`}
+                    </span>
+                    </div>
+                    <div style={styles.userBar}>
+                                        <span>
+                                          <strong style={{ color: '#c7d2fe' }}>User phone:</strong>{' '}
+                                          {tx.userPhoneNumber|| tx.user.phoneNumber  `ID: ${tx.user.id}`}
+                                        </span>
+                                        </div>
+
                   </div>
                 )}
 

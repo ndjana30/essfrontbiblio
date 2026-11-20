@@ -6,6 +6,7 @@ import Appareils from './Appareils.jsx';
 import TransactionsList from './TransactionsList.jsx'
 import TransactionForm from './TransactionForm.jsx';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import UserTransactions from './UserTransactions.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')).render(
            <Route path="/appareils" element={<Appareils />} />
            <Route path="/transaction-form" element={<TransactionForm />} />
            <Route path="/transactions-list" element={<TransactionsList />} />
+           <Route path="/user-transactions-list" element={<UserTransactions />} />
          </Routes>
        </BrowserRouter>
   </StrictMode>,
