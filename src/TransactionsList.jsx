@@ -12,6 +12,9 @@ export default function TransactionsList() {
 
 const token = localStorage.getItem('jwt_token');
 
+const logout = ()=>{
+    localStorage.removeItem('jwt_token');
+    }
   const handleToggleStatus = (transactionId) => {
       const token = localStorage.getItem('jwt_token');
 

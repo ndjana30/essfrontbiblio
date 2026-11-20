@@ -15,6 +15,9 @@ const TransactionForm = () => {
     return token ? { Authorization: `Bearer ${token}` } : {};
   };
 
+const logout = ()=>{
+    localStorage.removeItem('jwt_token');
+    }
   // 1. Fetch available devices on component mount
   useEffect(() => {
     fetchAvailableAppareils();

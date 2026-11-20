@@ -11,6 +11,9 @@ export default function UserTransactions() {
   const [classe, setClasse] = useState([]);
   const [phone, setPhone] = useState([]);
 
+const logout = ()=>{
+    localStorage.removeItem('jwt_token');
+    }
   const getUserInfo = () => {
     const token = localStorage.getItem('jwt_token');
     fetch('http://localhost:8080/api/v1/user/infos', {
@@ -135,6 +138,16 @@ export default function UserTransactions() {
             style={styles.navButton}
           >
             Back
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              logout();
+              navigate('/');
+            }}
+            style={styles.navButtonLogout}
+          >
+            Logout
           </button>
         </div>
       </nav>
@@ -294,6 +307,17 @@ const styles = {
   },
   navButton: {
     backgroundColor: '#4f46e5',
+    color: '#ffffff',
+    border: '1px solid rgba(129, 140, 248, 0.35)',
+    borderRadius: '10px',
+    padding: '8px 16px',
+    fontSize: '13px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s ease',
+  },
+navButtonLogout: {
+    backgroundColor: '#dc2626',
     color: '#ffffff',
     border: '1px solid rgba(129, 140, 248, 0.35)',
     borderRadius: '10px',
