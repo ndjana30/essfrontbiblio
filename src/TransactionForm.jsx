@@ -96,7 +96,21 @@ const TransactionForm = () => {
   };
 
   return (
+
     <div style={styles.container}>
+        <div style={styles.pageContainer}>
+        <nav style={styles.navbar}>
+                <div style={styles.navbarInner}>
+                  <span style={styles.brandText}>Equipment Portal</span>
+                  <button
+                    type="button"
+                    onClick={() => navigate('/user-transactions-list')}
+                    style={styles.navButton}
+                  >
+                    My Transactions History
+                  </button>
+                </div>
+              </nav></div>
       <div style={styles.card}>
         <h2 style={styles.title}>Start New Transaction</h2>
         <p style={styles.subtitle}>Select the available devices to include in this transaction.</p>
@@ -313,6 +327,53 @@ const styles = {
     fontSize: '16px',
     fontWeight: '600',
     transition: 'background-color 0.2s ease',
+  },
+pageContainer: {
+    minHeight: '100vh',
+    backgroundColor: '#030712',
+    color: '#f8fafc',
+    padding: '0 24px 40px 24px',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  },
+  navbar: {
+    width: '100%',
+    backgroundColor: 'rgba(15, 23, 42, 0.9)',
+    borderBottom: '1px solid #1e293b',
+    marginBottom: '32px',
+    position: 'sticky',
+    top: 0,
+    zIndex: 10,
+    backdropFilter: 'blur(8px)',
+  },
+  navbarInner: {
+    maxWidth: '1000px',
+    margin: '0 auto',
+    padding: '14px 0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '16px',
+  },
+  brandText: {
+    fontSize: '15px',
+    fontWeight: '700',
+    color: '#e2e8f0',
+    letterSpacing: '-0.01em',
+  },
+  navButton: {
+    backgroundColor: '#4f46e5',
+    color: '#ffffff',
+    border: '1px solid rgba(129, 140, 248, 0.35)',
+    borderRadius: '10px',
+    padding: '8px 16px',
+    fontSize: '13px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s ease',
+  },
+  mainWrapper: {
+    maxWidth: '1000px',
+    margin: '0 auto',
   },
 };
 
